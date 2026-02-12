@@ -5,5 +5,7 @@ const router = express.Router();
 let tarefaController = new TarefaController();
 
 router.get("/", tarefaController.listar);
+router.post("/",tarefaController.cadastrar);
+
 
 export default router;
