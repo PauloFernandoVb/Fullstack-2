@@ -13,6 +13,10 @@
   "paths": {
     "/tarefa/": {
       "get": {
+        "tags": [
+          "Tarefas"
+        ],
+        "summary": "Retorna uma lista com todas as tarefas",
         "description": "",
         "responses": {
           "200": {
@@ -24,6 +28,10 @@
         }
       },
       "post": {
+        "tags": [
+          "Tarefas"
+        ],
+        "summary": "Cadastra uma nova Tarefa",
         "description": "",
         "responses": {
           "201": {
@@ -55,6 +63,10 @@
         }
       },
       "put": {
+        "tags": [
+          "Tarefas"
+        ],
+        "summary": "Atualiza uma tarefa existente",
         "description": "",
         "responses": {
           "200": {
@@ -91,6 +103,10 @@
     },
     "/tarefa/{id}": {
       "delete": {
+        "tags": [
+          "Tarefas"
+        ],
+        "summary": "Deleta uma tarefa especifica",
         "description": "",
         "parameters": [
           {
@@ -115,6 +131,10 @@
         }
       },
       "get": {
+        "tags": [
+          "Tarefas"
+        ],
+        "summary": "Retorna uma tarefa especifica",
         "description": "",
         "parameters": [
           {
