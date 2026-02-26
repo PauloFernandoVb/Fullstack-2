@@ -42,7 +42,7 @@ export default class TarefaController {
     }
     atualizar(req, res) {
         try {
-            let { titulo, descricao } = req.body;//funaço de descronstruçao ja montando pelo body dentro das variaveis da chave é igual a linha 1 do cadastrar
+            let {id, titulo, descricao } = req.body;//funaço de descronstruçao ja montando pelo body dentro das variaveis da chave é igual a linha 1 do cadastrar
 
             if (!id || !titulo || !descricao) {
                 return res.status(400).json({ msg: "Parâmetros incorretos!Id e  titulo e descrição são obrigatórios!" });//ve se as infos vieram certas

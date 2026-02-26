@@ -37,9 +37,9 @@ export default class usuarioController {
     }
     atualizar(req, res) {
         try {
-            let { nome, email, nivelAcesso, urlFotoPerfil, celular } = req.body;
+            let { id, nome, email, nivelAcesso, urlFotoPerfil, celular } = req.body;
 
-            if (!nome || !email || !nivelAcesso || !urlFotoPerfil || !celular) {
+            if (!id || !nome || !email || !nivelAcesso || !urlFotoPerfil || !celular) {
                 return res.status(400).json({ msg: "Parametros incorretos!, todos os dados sao necessarios!" });
             } else {
                 let UsuarioEncontrado = usuarios.filter(t => t.id == id);
@@ -93,7 +93,7 @@ export default class usuarioController {
 
             } else {
                 usuarios = usuarios.filter(t => t.id != UsuarioEncontrado[0].id);
-               
+
                 return res.status(200).json({ msg: "Usuario deletada" });
             }
         }
