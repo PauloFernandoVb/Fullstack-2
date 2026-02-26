@@ -15,7 +15,6 @@ const tarefas = [
         descricao: "A prova esta chegando =( !!"
     }
 ];
-
 export default class TarefaController {
     //documentaçao seria o funcional - CONTARTO DE API: (definiçao do comportamento) contrato de chamada q dentro desse contrato caso os dados estejam corretos temos o tipo de retorno possivel e oq ele vai receber como retorno positiva ou negativo
     cadastrar(req, res) {
@@ -114,7 +113,4 @@ export default class TarefaController {
             return res.status(500).json({ msg: "erro ao processar requisiçao" });
         }
     }
-
-
-
 }
