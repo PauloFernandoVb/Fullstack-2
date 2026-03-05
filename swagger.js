@@ -11,4 +11,7 @@ const doc = {
 const saida = './outputSwagger.json';
 const routes = ['./index.js'];
 
-swaggerAutogen({ openapi: '3.0.0'})(saida, routes, doc);
+swaggerAutogen({ openapi: '3.0.0'})(saida, routes, doc)
+.then(async ()=>{
+ await import("./index.js")
+});

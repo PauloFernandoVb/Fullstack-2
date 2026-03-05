@@ -185,11 +185,43 @@
         "tags": [
           "Usuarios"
         ],
-        "summary": "Cadastra um novo Usuario",
+        "summary": "Cadastra um novo Usuário",
         "description": "",
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "example": "any"
+                  },
+                  "email": {
+                    "example": "any"
+                  },
+                  "ativo": {
+                    "example": "any"
+                  },
+                  "senha": {
+                    "example": "any"
+                  },
+                  "perfil": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
           }
         }
       },

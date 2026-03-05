@@ -31,6 +31,22 @@ export default class UsuarioEntity {
         this.#perfil = perfil;
     }
 
+    validar(){
+        if(this.#nome != null && this.#email != null && this.#perfil.id > 0 && this.#email.includes("@")){
+            return true;
+        }
 
+        return false;
+    }
+
+    toJSON(){
+        return{
+            id:this.#id,
+            nome:this.#nome,
+            email:this.#email,
+            ativo:this.#ativo,
+            perfil:this.#perfil
+        }
+    }
 
 }
