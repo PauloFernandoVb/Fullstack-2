@@ -14,8 +14,8 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
     //#swagger.tags=['Usuarios']
-    //#swagger.summary="Cadastra um novo Usuario"
-    controller.cadastrar(req, res);
+    //#swagger.summary="Cadastra um novo Usuário"
+    controller.gravar(req, res);
 })
 router.put("/", (req, res) => {
     //#swagger.tags=['Usuarios']
