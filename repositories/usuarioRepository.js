@@ -28,13 +28,47 @@ export default class UsuarioRepository {
         let valores = [entidade.nome, entidade.email, entidade.ativo, entidade.senha, entidade.perfil.id];
 
         let banco = new Database();
-        let results = await banco.ExecutaComandoLastInserted(sql,valores);
+        let results = await banco.ExecutaComandoLastInserted(sql, valores);
 
         //lastinserted ele retorna pro cliente a identificaçao do usuario
-        entidade.id=results;
+        entidade.id = results;
         return true;
 
 
+    }
+    async excluir(id) {
+        let sql = "delete from tb_usuario where usu_id = ?";
+
+        let valores = [id];
+        let banco = new Database();
+        let result = await banco.ExecutaComandoNonQuery(sql, valores);
+
+        return result;
+    }
+    async atualizar(entidadeAtualizada) {
+        let sql = "update tb_usuario set usu_nome = ?, usu_email = ?, usu_ativo = ?, usu_senha = ?, per_id = ? where usu_id = ?";
+
+        let valores = [entidadeAtualizada.nome, entidadeAtualizada.email, entidadeAtualizada.ativo, entidadeAtualizada.senha, entidadeAtualizada.perfil.id, entidadeAtualizada.id];
+
+        let banco = new Database();
+        let result = await banco.ExecutaComandoNonQuery(sql, valores);
+
+        return result;
+    }
+    async obter(id) {
+        let sql = "select * from tb_usuario where usu_id = ?";
+
+        let valores = [id];
+        let banco = new Database();
+        let rows = await banco.ExecutaComando(sql, valores);
+
+        if (rows.length > 0) {
+            let usuario = new UsuarioEntity(rows[0]["usu_id"], rows[0]["usu_nome"], rows[0]["usu_email"], rows[0]["usu_ativo"], rows[0]["usu_senha"], new PerfilEntity(rows[0]["per_id"]));
+
+            return usuario;
+
+        }
+        return null;
     }
 
 }
