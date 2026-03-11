@@ -2,21 +2,26 @@ import Database from "../db/database.js";
 //repositorio recebe e devolve entidades variando os tipos
 import UsuarioEntity from "../entities/usuarioEntity.js";
 import PerfilEntity from "../entities/perfilEntity.js";
+import Repository from "./repository.js";
 
-export default class UsuarioRepository {
+export default class UsuarioRepository extends Repository {
     //retorna uma lista de entidades(usuarioEntity)
+
+    constructor() {
+        super();
+    }
 
     async listar() {
         let sql = `select * from tb_usuario u inner join tb_perfil p on u.per_id = p.per_id`;
-        let banco = new Database();
-        let rows = await banco.ExecutaComando(sql);
+
+        let rows = await this.banco.ExecutaComando(sql);
         console.log(rows);
         //mapear para listar as entidades
         let entidades = [];
 
         //cada posiçao da lista usuarios
         for (let row of rows) {
-            entidades.push(new UsuarioEntity(row['usu_id'], row['usu_nome'], row['usu_email'], row['usu_ativo'], row['usu_senha'], new PerfilEntity(row['per_id'], row['per_descricao'])));
+            entidades.push(UsuarioEntity.toMap(row));
         }
         return entidades;
     }
@@ -27,31 +32,30 @@ export default class UsuarioRepository {
 
         let valores = [entidade.nome, entidade.email, entidade.ativo, entidade.senha, entidade.perfil.id];
 
-        let banco = new Database();
-        let results = await banco.ExecutaComandoLastInserted(sql, valores);
+
+        let results = await this.banco.ExecutaComandoLastInserted(sql, valores);
 
         //lastinserted ele retorna pro cliente a identificaçao do usuario
         entidade.id = results;
         return true;
-
-
     }
+
     async excluir(id) {
         let sql = "delete from tb_usuario where usu_id = ?";
 
         let valores = [id];
-        let banco = new Database();
-        let result = await banco.ExecutaComandoNonQuery(sql, valores);
+
+        let result = await this.banco.ExecutaComandoNonQuery(sql, valores);
 
         return result;
     }
+
     async atualizar(entidadeAtualizada) {
         let sql = "update tb_usuario set usu_nome = ?, usu_email = ?, usu_ativo = ?, usu_senha = ?, per_id = ? where usu_id = ?";
 
         let valores = [entidadeAtualizada.nome, entidadeAtualizada.email, entidadeAtualizada.ativo, entidadeAtualizada.senha, entidadeAtualizada.perfil.id, entidadeAtualizada.id];
 
-        let banco = new Database();
-        let result = await banco.ExecutaComandoNonQuery(sql, valores);
+        let result = await this.banco.ExecutaComandoNonQuery(sql, valores);
 
         return result;
     }
@@ -59,14 +63,13 @@ export default class UsuarioRepository {
         let sql = "select * from tb_usuario where usu_id = ?";
 
         let valores = [id];
-        let banco = new Database();
-        let rows = await banco.ExecutaComando(sql, valores);
+
+        let rows = await this.banco.ExecutaComando(sql, valores);
 
         if (rows.length > 0) {
-            let usuario = new UsuarioEntity(rows[0]["usu_id"], rows[0]["usu_nome"], rows[0]["usu_email"], rows[0]["usu_ativo"], rows[0]["usu_senha"], new PerfilEntity(rows[0]["per_id"]));
+            let usuario = UsuarioEntity.toMap(rows[0]);
 
             return usuario;
-
         }
         return null;
     }
