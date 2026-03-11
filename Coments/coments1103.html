@@ -1,0 +1,66 @@
+<!-- refatorando as camadas de repositorios
+ deixando a variavel instanciada do banco global para so fazer uma instancia que vem da classe usuario repository -->
+
+<!-- usando poo para fazer isso uma classe pode ter metodos e atributos e construtor 
+   -->
+<!-- vamos usar atributo e construtor para deixar o banco de maneira global para chamar no usuario repository
+  
+ 
+ logo toda vez que é feito a instancia na usuario controller! e chamado esse construtor automaticamente -->
+######################### 
+
+<!-- implementar a parte de transaçao e a transaçao precisa usar a mesma conexao com o banoc mas la temos 3 operaçoes diferentes com metodos diferentes -->
+
+<!-- a transaçao acontece para toda a conexao entao com uma conexao ja criada  -->
+
+########################
+<!-- criando o repositorio para usar de herança  e deixaremos de repetir o this .banco por extends o usuario repositori vai receber a herança com extends que compoe com o repository.js-->
+
+
+
+<!-- faremos herança com a classe generica do repositorio -->
+
+<!-- chamaremos o construtor da classe que passa a herança para inicializar e acontcer a abertura de conexao com o banco -->
+<!-- usaremos o super() para dizer que é uma herança  -->
+<!-- fazendo com o super na classe pai do repository.js la precisamos fazer o get pq o atributo banco e privado e tiramos o # das this.banco.executacomando(sql) -->
+
+<!--criar metodo de mapeamento onde o metodo obter e listar vao aconteceer
+    eles precisam ficar em algum lugar para chamar o for esse: if (rows.length > 0) {
+            let usuario = new UsuarioEntity(rows[0]["usu_id"], rows[0]["usu_nome"], rows[0]["usu_email"], rows[0]["usu_ativo"], rows[0]["usu_senha"], new PerfilEntity(rows[0]["per_id"])); -->
+
+<!--
+          USUARIOENTITY A ONDE ESTA MAPEADO  
+    vamos criar na usuario entidades  so para reaproveitar codigo ai se criar mais colunas para guardar informaçoes teremos que deixar mapeado para entidade usuario e se ja temos em um nunico lugar e o sist cresce temos que mudar um unico lugar e a funçao ja chama esse mapeamento -->
+
+
+<!-- ai faremos a troca no usuario repositorio chamando a return usuario entiti com o metodo toMap  -->
+
+<!-- NAO USA-SE O NEW QUANDO FOR OBJETO STATIC POR ISSO NOS DOIS METODOS OBTER E LISTAR TIRA O NEW DA INSTACIA  -->
+<!-- disso let usuario =  UsuarioEntity(row["usu_id"], row["usu_nome"], row["usu_email"], row["usu_ativo"], row["usu_senha"], new PerfilEntity(row["per_id"])-->
+
+<!--  para isso:             let usuario =  UsuarioEntity.toMap(rows[0]);
+-->
+
+
+<!-- no listar e no obter que ficaram mapeados -->
+
+##############################
+<!-- MUDANÇAS NA CONTROLLER  
+ TODOS OS METODOS FAZEM INSTANCIA COM REPO E NEW USUARIO REPOSITORY -->
+
+
+<!-- fazer a msm coisa sem usar herança agora pq n da para fazer a herança generica aqui eu posso ter mais de um repository entao faremos o mesmo mas sem a herança  -->
+
+
+<!--  eliminaremos o let repo = new UsuarioRepository(); -->
+<!--    faremos um atributo ainda e o construtor que sera privado tbme instaciado  -->
+
+<h1>centralizando a instancia com o banco</h1>
+<!--usuario usuario repositorio e uam dependencia da usaurio controller assim tbm como depende do banco -->
+##############################
+<!-- DEPENDENCIAA -->
+
+<!-- o conceito -->
+o conceito de dependencia e quando uma classe depende de outra classe para funcionar ou seja a classe usuario controller depende da classe usuario repositorio para funcionar e a classe usuario repositorio depende do banco para funcionar entao temos uma cadeia de dependencia onde a classe usuario controller depende da classe usuario repositorio e a classe usuario repositorio depende do banco para funcionar
+
+<!--  -->

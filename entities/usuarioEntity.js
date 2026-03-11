@@ -1,3 +1,4 @@
+import PerfilEntity from "./perfilEntity.js";
 export default class UsuarioEntity {
 
     //atributos do usuario
@@ -30,22 +31,33 @@ export default class UsuarioEntity {
         this.#senha = senha;
         this.#perfil = perfil;
     }
+    static toMap(row) {
+        let usuario = new UsuarioEntity(row["usu_id"], row["usu_nome"], row["usu_email"], row["usu_ativo"], row["usu_senha"], new PerfilEntity(row["per_id"]));
 
-    validar(){
-        if(this.#nome != null && this.#email != null && this.#perfil.id > 0 && this.#email.includes("@")){
+        //para junçoes com a tabela de perfil 
+        if (row["per_descricao"] != null) {
+            usuario.perfil.descricao = row["per_descricao"];
+        }
+        return usuario;
+
+
+    }
+
+    validar() {
+        if (this.#nome != null && this.#email != null && this.#perfil.id > 0 && this.#email.includes("@")) {
             return true;
         }
 
         return false;
     }
 
-    toJSON(){
-        return{
-            id:this.#id,
-            nome:this.#nome,
-            email:this.#email,
-            ativo:this.#ativo,
-            perfil:this.#perfil
+    toJSON() {
+        return {
+            id: this.#id,
+            nome: this.#nome,
+            email: this.#email,
+            ativo: this.#ativo,
+            perfil: this.#perfil
         }
     }
 
