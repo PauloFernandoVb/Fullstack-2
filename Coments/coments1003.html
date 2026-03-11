@@ -1,0 +1,31 @@
+<!-- hoje faremos o delete e o updtade e o buscar pelo id-->
+
+<!-- o repositorio recebe entidade ent nos update e insert a funçao do repositorio recebe a entidade le dela que retiramos as informaçoes -->
+<!-- quando o metodo do repositorio ler essa informaçoa ela devolve a entidade tbm -->
+
+<!--  no obter ele precisa ter 2 opçoes de retorn -->
+<!-- ##############################
+ importante -->
+<!-- estamos mapeando de maneira fixa na linha zero para vir apenas 1 usuario ai colocamos a linha zero e nesse cara nao devolvemos um alista apenas uma entidade usuario ou null vamos usar para validar na controladora pq se chamar o metodo e devolver nulo na controller vamos devolver o codigo 404 -->
+<!-- retomando ele retona 1 usuario e é filtrado pelo id essa coluna e PK e incremental logo nunca repete se eue contrar pelo id so tem aquele e se so tem aquele a var rows so tras uma linha e começa pelo zero -->
+
+<!-- ###########################
+   FAZENDO END POINT NA CONTROLLER  -->
+<!-- ver se o id perternce a um usuario na controller -->
+
+<!-- ###### explicaçao do entidade para repositorio para controller ##### -->
+
+<!-- a requisiçao de cadastro temos o end pont q receb informaçao reqw.body e nao temos a modelo la faziamos a modelo e jogava os dados nela e ela enviava o cadastro no metodo
+    
+   agora temos 2 atores para gravar a entidade q tem os atributos e o repositorio q tem os metodos q fzem os metyodos e fazer eles conversarem quando chamo do repositorio eu precso passar as informaçoes em formato de entidade com dados como nome email e tal ai para fazer as atualizaçao sao passadas para montar o comando sql ai na hora de ler as informaçoes o repositorio mapea doq o codigo conheçe quem representa as tabelas sao as entidades com os entributos entaao os atributos a tabela representa ler dos banco ai ai mapeamos para qual representa a entidade -->
+
+<!--  no obter se der certo retornamos o usuario no json-->
+
+<!-- o atualizar//recebemos pelo corpo -->
+<!-- na funçao atualizar ela leva em consideraçao o id  que no cadastro nao leva -->
+
+<!-- pq para att a gente precisa saber quem vamos atualizar e no cadastro nao! -->
+
+<!-- caso o id que queremos alterar existe precisamos conferir  -->
+<!-- se eu achei eu chamo o atualizar e la temos o update q retorna true ou false se for tru retorna 200 senao ele manda para o throw q deve ter algumm problema  mandando para o catch-->
+ <!-- fazer as rotas -->

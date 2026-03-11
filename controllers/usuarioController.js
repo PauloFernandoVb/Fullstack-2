@@ -24,20 +24,98 @@ export default class usuarioController {
 
             let entidade = new UsuarioEntity(0, nome, email, ativo, senha, new PerfilEntity(perfil.id));
 
-            if(entidade.validar()){
+            if (entidade.validar()) {
                 let repo = new UsuarioRepository();
                 let result = await repo.gravar(entidade);
 
-            return res.status(201).json(entidade);
+                return res.status(201).json(entidade);
 
-            }else{
-                return res.status(400).json({msg:"Parametros incorretos. Por favor confira as informaçoes do usuário!"});
+            } else {
+                return res.status(400).json({ msg: "Parametros incorretos. Por favor confira as informaçoes do usuário!" });
             }
 
         }
         catch (erro) {
             console.error(erro);
             return res.status(500).json({ msg: "Erro ao processar requisiçao" });
+        }
+    }
+    async deletar(req, res) {
+        try {
+            let { id } = req.params;
+
+            let repo = new UsuarioRepository();
+
+            let usuario = await repo.obter(id);
+
+            if (usuario == null) {
+                return res.status(400).json({ msg: "Usuario nao encontrado" });
+            }
+            //se encontrar
+            let result = await repo.excluir(id);
+
+            if (result == true) {
+                return res.status(200).json({ msg: "usuario deletado!" })
+            } else {
+                throw new Error("erro ao excluir o usuario no banco");
+                //isso faz o codigo cair no catch por algum erro e rota o codigo 500
+            }
+        }
+        catch (error) {
+            console.error(error);
+            return res.status(500).json({ msg: "erro ao processar requisiçao!" })
+        }
+    }
+    async obter(req, res) {
+        try {
+            let { id } = req.params;
+
+            let repo = new UsuarioRepository();//chama o sql 
+            let usuario = await repo.obter(id);
+            if (usuario == null) {
+                return res.status(404).json({ msg: "usuario nao encontrado!" });
+            }
+
+            return res.status(200).json(usuario);
+
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ msg: "erro ao processar requisiçao!" })
+        }
+    }
+
+    async atualizar(req, res) {
+        try {
+            let { id, nome, email, ativo, senha, perfil } = req.body;//recebemos pelo corpo
+            let usuario = new UsuarioEntity(id, nome, email, ativo, senha, new UsuarioEntity(perfil.id));
+
+            //valida se o id veio coreeto se veio ai atualizamos
+            if (usuario.validar() && id) {//se esta valido e tem algum id
+
+                let repo = new UsuarioRepository();
+
+                let usuarioEncontrado = await repo.obter(id);
+
+                if (usuarioEncontrado != null) {
+                    let result = await repo.atualizar(usuario);
+
+                    if (result) {
+                        return res.status(200).json({ msg: "usuario atualizado com sucesso!" })
+                    }
+                    throw new Error("erro ao atualizar usuario no banco de dados")
+                }
+                else {
+                    return res.status(404).json({ msg: "usuario nao encontrado!" })
+                }
+
+            } else {
+                return res.status(400).json({ msg: "faltam informaçoes para atualizar!" })
+            }
+
+        }
+        catch (error) {
+            console.error(error);
+            return res.status(500).json({ msg: "erro ao processar requisiçao!" })
         }
     }
 
