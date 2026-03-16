@@ -88,7 +88,7 @@ export default class usuarioController {
     async atualizar(req, res) {
         try {
             let { id, nome, email, ativo, senha, perfil } = req.body;//recebemos pelo corpo
-            let usuario = new UsuarioEntity(id, nome, email, ativo, senha, new UsuarioEntity(perfil.id));
+            let usuario = new UsuarioEntity(id, nome, email, ativo, senha, new PerfilEntity(perfil.id));
 
             //valida se o id veio coreeto se veio ai atualizamos
             if (usuario.validar() && id) {//se esta valido e tem algum id
