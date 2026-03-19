@@ -1,72 +1,70 @@
 <!-- ########################################################################## -->
 
-<!-- aula do dia 03/03 criando as tabelas e as restriçoes dos usuarios cadastrados e nao cadastrados -->
-<!-- falamos sobre as cookies que davam as pemissoes e oque ela armazenava  -->
-<!-- Falamos sobre a implementaçao de banco de dados que eram usados na modelo
-e tinham mais coisas la como entidades do sistema recursos que o sistema usa para as funcionalidades
-porem agora nao e nas entidas o produto tinha que saber aquilo que ia precisar como sku foto,estoque, logo a models era algo com mais funçoes doque o necessario logo a entidade e uma representaçao da tabela do banco nao podendo perisistir as informaçoes -->
+<!-- Aula do dia 03/03 - Criando as tabelas e as restrições dos usuários cadastrados e não cadastrados -->
+<!-- Falamos sobre as cookies que davam as permissões e o que ela armazenava -->
+<!-- Falamos sobre a implementação de banco de dados que eram usados no modelo
+e tinham mais coisas lá, como entidades do sistema, recursos que o sistema usa para as funcionalidades.
+Porém, agora não é nas entidades. O produto tinha que saber aquilo que ia precisar, como SKU, foto, estoque.
+Logo, o model era algo com mais funções do que o necessário. Logo, a entidade é uma representação da tabela do banco,
+não podendo persistir as informações -->
 
-<!-- A ideia E SEPARAR AS RESPONSABILIDADES DAS ENTIDADES E O BANCO DE DADOS -->
-<!-- entidaddes representao recursos dos produtos ou entidade produto que nessa classe terao os atributos get set construtor metodos etc -->
+<!-- A ideia É SEPARAR AS RESPONSABILIDADES DAS ENTIDADES E DO BANCO DE DADOS -->
+<!-- Entidades representam recursos dos produtos ou entidade produto. Nessa classe terão os atributos, getters, setters, construtor, métodos, etc. -->
 
-<!-- enquanto nos repositorios ficaram os metodos de conexao com o banco gravar , atualizar delete etc -->
+<!-- Enquanto nos repositórios ficaram os métodos de conexão com o banco: gravar, atualizar, deletar, etc. -->
 
-<!-- Transaçao em banco de dados evita quebras nas trocas de informaçoes -->
+<!-- Transação em banco de dados evita quebras nas trocas de informações -->
 
-<!-- Criamos entities e repositories as pastas novas -->
+<!-- Criamos pastas novas: entities e repositories -->
 
-<!-- !!//repositorio recebe e devolve entidades variando os tipos
-
-TODAS AS CAMADAS SERAM LIGADAS -->
+<!-- Repositório recebe e devolve entidades variando os tipos. TODAS AS CAMADAS SERÃO LIGADAS -->
 
 <!-- ########################################################################## -->
 
-<!-- AULA DIA 04/03 COMEÇANDO COM BANCO -->
+<!-- AULA DIA 04/03 - COMEÇANDO COM BANCO -->
 
-<!--  criar um crud de usuarios com entidade usuario que sera onde tera os atributos e a gente vai precisar dousuario reposito com os sqls-->
+<!-- Criar um CRUD de usuários com entidade usuário que será onde terá os atributos e vamos precisar do usuário repositório com os SQLs -->
 
-<!-- criaremos os metodos para fazer as operaçoes dop banco (5 operaçoes) -->
+<!-- Criar os métodos para fazer as operações do banco (5 operações) -->
 
-<!-- criamos o usuario entit com os metodos e paramentros do usuario -->
+<!-- Criamos a entidade usuário com os métodos e parâmetros do usuário -->
 
-<!-- Toda a entitade perfil vem para a usuario repository para nao precisar ficar mesclando -->
+<!-- Toda a entidade perfil vem para o usuário repositório para não precisar ficar mesclando -->
 
-<!-- end point para testar o listar do usuario repository com controler e o arquivo de rotas-->
+<!-- Endpoint para testar a listagem do usuário repositório com controller e o arquivo de rotas -->
 
 <!-- ######################################### -->
- <!-- 2 AULA DO DIA 04/03 -->
+<!-- 2ª AULA DO DIA 04/03 -->
 
- <!-- aJUSTANDO a listagem com os toJSON(estringfica) e implementado o cadastro no repositorio com insert -->
+<!-- Ajustando a listagem com toJSON (stringify) e implementando o cadastro no repositório com INSERT -->
 
+<!-- Fizemos o método listar na controller -->
+<!-- Uma classe não pode ser serializada. Nessa linha estamos devolvendo uma classe por isso não serializa -->
+<!-- return res.status(200).json(entidades); -->
 
-<!-- Fizemos o metodo listar na controller  -->
-<!-- Uma nclasse nao pode ser serializada e nessa linha estamos devolvendo uma classe por isso nao serializa -->
-<!--return res.status(200).json(entidades);
- -->
+<!-- Logo temos que transformar a nossa classe em um objeto genérico para serializá-la -->
 
- <!-- logo temos que transformar a nossa classe em um obj generico para serializar ela -->
+<!-- Dentro da entidade usuário criamos um método toJson(){} -->
+<!-- E como dentro do usuário temos o perfil, na entidade perfil temos que fazer o toJson também para passar correto
+(como se fosse aquele negócio em C#: c.usuario.perfil) -->
 
- <!-- dentro do usuario entity  criamos um metodo toJson(){} -->
-  <!-- e como dentro do usario temos o perfil na perfil temos que fazer o toJson tbm para passar certo como se fosse aquele negocio em c c.usuario.perfil -->
+<!-- REPOSITÓRIO INSERT -->
 
-   <!-- REPOSITORIO INSERT -->
+<!-- lastInsertedId - ele retorna pro cliente a identificação do usuário (id) -->
+<!-- entidade.id = results;
+     return true;
+     Para retornar o id que foi cadastrado nesse contexto do gravar -->
 
-<!-- //lastinserted ele retorna pro cliente a identificaçao do usuario (id)-->
+<!-- Validar no lado servidor no try do gravar -->
+<!-- Para gravar temos que chamar o repositório pela entity. O repositório espera criar a entidade para aí sim passar para o repositório após a validação -->
 
-<!-- entidade.id=results;
-      return true; 
-      
-      para retornar o id que foi cadastrado nesse contexto do gravar -->
+<!-- Validação de entidade pode acontecer em cadastro e atualização, então criamos regras de validação para serem reutilizadas nas entidades usuário.
+Logo ela leva não só os métodos dela mas também os métodos de validação (ex: email válido).
+Ela recebe pela entidade usuário esse método validador -->
+<!-- Ao fazer o método na entity, chamar ele na Controller -->
 
- <!-- validar no lado servidor no try do gravar -->
-  <!-- para gravar temos que chamar o repositorio pelo entity o repositorio espera criar a entidade para ai sim passar par ao repositorio apos a validaçao -->
+<!-- Para não ficar fazendo "node swagger" toda hora vamos juntar tudo -->
 
-  <!-- validaçao de entidade pode acontecer em cadastro atualizaçao entao criamos regras de validaçao para serem reaproveitadas nas entidades usuarios logo ela leva n so os metodos dela mas tbm os metodos de validaçao ex email valido ela recebe pela usuario entity esse metodo validador -->
-<!-- ao fazer o metodo na entity chamar ele na Controller -->
+<!-- O perfil na controladora eu trato como objeto. Isto está dificultando no cadastro da documentação -->
 
-<!-- para n ficar fazendo o node swagger toda hora vamos juntar tudo  -->
-
-<!-- o perfil na controladora eu rato como obj ent esta dificultando a cadastrar na documentaçao -->
-
-<!--Logo preciso mandar ele com o formato de um obj com o id  -->
-
+<!-- Logo preciso mandá-lo com o formato de um objeto com o id -->

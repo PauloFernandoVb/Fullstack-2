@@ -1,0 +1,48 @@
+<!-- AUTENTICAÇÃO DE API
+seria os middlewares -->
+
+<!-- Faremos uma cookie antes com o código e quando chegava a requisição verificava a cookie com a identificação -->
+
+<!-- Agora muda o formato da cookie -->
+
+<!-- Faremos uma controller para fazer a autenticação e dentro dela teremos um endpoint para fazer a validação do nosso usuário -->
+
+<!-- Recebe as credenciais e procura no banco os dados das credenciais -->
+
+<!-- Se encontrar ele significa que a pessoa está utilizando, vai receber uma cookie de autenticação -->
+<!-- No endpoint faremos a autenticação da cookie -->
+<!-- Toda requisição trará suas cookies criadas. Antes era com a flag httpOnly como true
+ 
+O cliente não interage com ela mas agora na resposta na flag httpOnly virão autenticadas com essa cookie -->
+
+<!-- Dentro dela teremos os dados do usuário do login através do email e senha e também outras informações da cookie -->
+<!-- Ela será um token padronizado com o nome JWT (JSON Web Token) -->
+
+<!-- JWT é uma sequência de caracteres aleatórios gerada de forma segura para identificar o usuário -->
+
+<!-- FLUXO DE AUTENTICAÇÃO:
+1. Usuário faz login com email e senha
+2. Validar credenciais no banco de dados
+3. Se válido, gerar um JWT
+4. Enviar JWT na cookie com flag httpOnly=true
+5. A cada requisição, o servidor valida o JWT
+6. Se válido, permite acesso; se inválido, nega e pede novo login -->
+
+
+<!-- a parte do pay load e a principal para nos -->
+
+<!-- a parte verde e impotante mas fazemos uma vez soé a assinatura jwt dadno um valor de exemplo no site mas essa asssinatura como eu sei q foi emitidad por um site x ou pelo meu ? por uma assinatura -->
+
+<!-- usaremos a biblioteca do jsonwebtoken e com a cookie parse -->
+
+<!-- o metodo principal vai ser jwt.sign que gera a sequencia de caracteres para gerar o novo token o sist entrega 2 dados a parte roxa e o secret para o token ser assinado a partir disso pela requisaçao ele sabe que e do nosso sistema e configurando tempo de configuração -->
+
+<!-- criaremos os middlewares -->
+
+<!-- metodo para vincular as rotas e requirer quais lugares vao usar o middleware -->
+<!--  -->
+<!--  -->
+<!--  -->
+<!--  -->
+<!--  -->
+<!--  -->
